@@ -338,7 +338,7 @@ function! quickui#menu#create(opts)
 	call setwinvar(winid, '&wincolor', get(a:opts, 'color', 'QuickBG'))
 	let opts = {'mapping':0, 'cursorline':0, 'drag':0, 'zindex':31000}
 	let opts.borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
-	let opts.border = [1,1,1,1,1,1,1,1,1]
+	let opts.border = [1,1,1,1,1,1,1,2,1]
 	let opts.padding = [0,0,0,0]
 	let opts.filter = 'quickui#menu#filter'
 	let opts.callback = 'quickui#menu#callback'
