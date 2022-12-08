@@ -332,12 +332,13 @@ function! quickui#menu#create(opts)
 	let s:cmenu.cfg = deepcopy(a:opts)
 	let w = s:cmenu.width
 	let opts = {"minwidth":w, "maxwidth":w, "minheight":1, "maxheight":1}
-	let opts.line = 1
+	let opts.line = 10
 	let opts.col = 1
 	call popup_move(winid, opts)
 	call setwinvar(winid, '&wincolor', get(a:opts, 'color', 'QuickBG'))
 	let opts = {'mapping':0, 'cursorline':0, 'drag':0, 'zindex':31000}
-	let opts.border = [0,0,0,0,0,0,0,0,0]
+	let opts.borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+	let opts.border = [1,1,1,1,1,1,1,1,1]
 	let opts.padding = [0,0,0,0]
 	let opts.filter = 'quickui#menu#filter'
 	let opts.callback = 'quickui#menu#callback'
