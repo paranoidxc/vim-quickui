@@ -504,7 +504,10 @@ function! s:nvim_create_context(textlist, opts)
 	let hwnd.index = get(a:opts, 'index', -1)
 	let hwnd.opts = deepcopy(a:opts)
 	let opts = {'width':w, 'height':h, 'focusable':1, 'style':'minimal'}
-	let opts.relative = 'editor'
+	"let opts.relative = 'editor'
+	"todo
+	let relative = get(a:opts, 'relative', 'editor')	
+	let opts.relative = relative
 	if has_key(a:opts, 'line') && has_key(a:opts, 'col')
 		let opts.row = a:opts.line - 1
 		let opts.col = a:opts.col - 1
@@ -516,6 +519,12 @@ function! s:nvim_create_context(textlist, opts)
 	if has('nvim-0.6.0')
 		let opts.noautocmd = 1
 	endif
+
+	"todo
+	if opts.relative == 'cursor'
+		let opts.row = 4
+	endif
+	
 	let winid = nvim_open_win(bid, 0, opts)
 	let hwnd.winid = winid
 	let keymap = quickui#utils#keymap()

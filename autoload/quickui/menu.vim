@@ -619,7 +619,12 @@ function! s:neovim_dropdown()
 		return 1
 	endif
 	let item = s:cmenu.inst.items[s:cmenu.index]
-	let opts = {'col': item.x + 1, 'line': 2, 'horizon':1, 'zindex':31100}
+	"let line_pos = line('.')+4
+	"todo
+	let line_pos = 2
+
+	let opts = {'col': item.x + 1, 'line': line_pos, 'horizon':1, 'zindex':31100}
+	let opts.relative = 'cursor'
 	let opts.reserve = 1
 	let opts.lazyredraw = 1
 	let cfg = s:cmenu.current[item.name]
@@ -707,10 +712,19 @@ function! quickui#menu#nvim_open_menu(opts)
 	let s:cmenu.current = current
 	let bid = quickui#core#scratch_buffer('menu', [s:cmenu.inst.text])
 	let w = s:cmenu.width
-	let opts = {'width':w, 'height':1, 'focusable':1, 'style':'minimal'}
+	let opts = {'width':60, 'height':1, 'focusable':1, 'style':'minimal'}
+	
+	"let opts.border = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+	let opts.border = 'rounded'
+	" todo
+	"let opts.col = 100
+	"let opts.row = line('.') + 2
+
 	let opts.col = 0
-	let opts.row = 0
-	let opts.relative = 'editor'
+	let opts.row = 1
+	"let opts.bufpos = [1, 1]
+	let opts.relative = 'cursor'
+	
 	let s:cmenu.bufnr = bid
 	if has('nvim-0.6.0')
 		let opts.noautocmd = 1
@@ -719,8 +733,15 @@ function! quickui#menu#nvim_open_menu(opts)
 	let s:cmenu.winid = winid
 	let s:cmenu.cfg = deepcopy(a:opts)
 	let w = s:cmenu.width
-	let color = get(a:opts, 'color', 'QuickBG')
+	let color = 'QuickBG'
     call nvim_win_set_option(winid, 'winhl', 'Normal:'. color)
+
+	let bordercolor = 'QuickBorder'
+	call nvim_win_set_option(winid, 'winhl', 'Normal:'. bordercolor)
+
+
+	
+
 	let s:cmenu.hotkey = s:cmenu.inst.hotkey
 	let s:cmenu.state = 1
 	let s:cmenu.context = -1
